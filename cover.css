@@ -27,7 +27,7 @@ a:hover {
 html,
 body {
   height: 100%;
-  background-color: #9b59b6;
+  background-color: #34495e;
 }
 body {
   color: #fff;
@@ -146,7 +146,7 @@ body {
     padding: 20px;
 
     width: 50%; /* Could be more or less, depending on screen size */
-    
+
 }
 
 /* The Close Button */
