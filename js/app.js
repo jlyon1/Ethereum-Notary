@@ -21,16 +21,14 @@ var App = {
   },
 
   initContract: function() {
-   $.getJSON('Adoption.json', function(data) {
-     // Get the necessary contract artifact file and instantiate it with truffle-contract.
-     var AdoptionArtifact = data;
-     App.contracts.Adoption = TruffleContract(AdoptionArtifact);
+   $.getJSON('Notary.json', function(data) {
+     // Get the  contract artifact file and instantiate it with truffle-contract.
+     var NotaryArtifact = data;
+     App.contracts.Notary = TruffleContract(NotaryArtifact);
 
-     // Set the provider for our contract.
-     App.contracts.Adoption.setProvider(App.web3Provider);
+     App.contracts.Notary.setProvider(App.web3Provider);
 
-     // Use our contract to retieve and mark the adopted pets.
-     return App.populate();
+     return 0;
    });
    return App.setBindings();
  },
@@ -40,12 +38,46 @@ var App = {
     $(document).on('click', '.btn-hash', function(){
       document.getElementById('input_overlay').style.display="block";
     });
+    $(document).on('click', '.btn-upload', function(){
+      App.contracts.Notary.deployed().then(function(instance) {
+        contractInstance = instance;
+        console.log(contractInstance.getHashAt.call());
+
+        return contractInstance.getHashAt.call();
+      }).then(function(strs){
+        console.log(strs);
+      }).catch(function(err) {
+        console.log(err.message);
+      });
+    });
     $(document).on('click', '.close', function(){
       document.getElementById('input_overlay').style.display="none";
+    });
+    $(document).on('click','.btn-submitHash',function(){
+      App.submitHash();
+    });
+  },
+
+  submitHash: function(){
+    web3.eth.getAccounts(function(error,accounts){
+      if (error) {
+        console.log(error);
+      }
+      var account = accounts[0];
+      App.contracts.Notary.deployed().then(function(instance) {
+        contractInstance = instance;
+        return contractInstance.storeHash(0xF,3242,{from: account});
+      }).then(function(val){
+        console.log(val);
+      }).catch(function(err) {
+        console.log(err.message);
+      });
     });
   }
 
 }
+
+
 
 $(function() {
   $(window).load(function() {

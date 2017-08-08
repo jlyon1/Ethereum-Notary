@@ -7,9 +7,14 @@ pragma solidity ^0.4.4;
 // token, see: https://github.com/ConsenSys/Tokens. Cheers!
 
 contract Notary {
-		uint256[0x7FFFFFFFFFFFFFFF] public AllHashes;
+		uint[0x7FFFFFFFFFFFFFFF] public AllHashes;
 
-		function storeHash(uint date) returns (uint){
-			
+		function storeHash(uint256 hash,uint date) returns (uint){
+			AllHashes[hash] = date;
+			return date;
+		}
+
+		function getHashAt() returns (uint){
+			return 36;
 		}
 }

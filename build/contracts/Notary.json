@@ -1,0 +1,75 @@
+{
+  "contract_name": "Notary",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "hash",
+          "type": "uint256"
+        },
+        {
+          "name": "date",
+          "type": "uint256"
+        }
+      ],
+      "name": "storeHash",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "AllHashes",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "getHashAt",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    }
+  ],
+  "unlinked_binary": "0x6060604052341561000f57600080fd5b5b6101418061001f6000396000f300606060405263ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166303c2dd9f81146100535780638518a6ef1461007e578063ccd7b505146100a6575b600080fd5b341561005e57600080fd5b61006c6004356024356100cb565b60405190815260200160405180910390f35b341561008957600080fd5b61006c6004356100f0565b60405190815260200160405180910390f35b34156100b157600080fd5b61006c61010f565b60405190815260200160405180910390f35b6000818184677fffffffffffffff81106100e157fe5b0160005b505550805b92915050565b600081677fffffffffffffff811061010457fe5b0160005b5054905081565b60245b905600a165627a7a723058207b5f3c68f21f98121cd02d5d5e39ef1cad8f36bed93fffcd23b45378f50c156b0029",
+  "networks": {
+    "1502066779034": {
+      "events": {},
+      "links": {},
+      "address": "0x22d16b1dc2c4a918a70db109bbd418d1d8706012",
+      "updated_at": 1502159849269
+    },
+    "1502159915951": {
+      "events": {},
+      "links": {},
+      "address": "0x047b6df04ca782f1e17df1f3826dd4dd49d8fdfe",
+      "updated_at": 1502159961120
+    }
+  },
+  "schema_version": "0.0.5",
+  "updated_at": 1502159961120
+}
