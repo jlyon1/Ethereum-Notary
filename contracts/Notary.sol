@@ -19,6 +19,7 @@ contract Notary {
 				AllHashes[hash] = val;
 				return 1;
 			}else{
+				revert();
 				return 0;
 			}
 		}

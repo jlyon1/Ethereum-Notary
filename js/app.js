@@ -38,7 +38,10 @@ var App = {
     $(document).on('click', '.btn-hash', function(){
       document.getElementById('Submit-Hash-modal').style.display="block";
     });
-    $(document).on('click', '.btn-upload', function(){
+    $(document).on('click', '.btn-check', function(){
+      document.getElementById('Check-Hash-modal').style.display="block";
+    });
+    $(document).on('click', '.btn-submitHash-check', function(){
       web3.eth.getAccounts(function(error,accounts){
         if (error) {
           console.log(error);
@@ -48,9 +51,13 @@ var App = {
           contractInstance = instance;
           //console.log(contractInstance.getHashAt.call());
 
-          return contractInstance.getHashAt.call(0x4e080f0d799b71a654d945e4cabf46a734caac436554b39841d1f9105bd36561);
+          return contractInstance.getHashAt.call(parseInt("0x" + $(".hashIn").val()));
         }).then(function(strs){
-          console.log(strs);
+          document.getElementById('Submit-Hash-modal').style.display="none";
+          for(var i = 0; i < 100; i ++);
+          document.getElementById('Confirm-Hash-modal').style.display="block";
+          $(".confirmation-message").html("<b>This document hash was recorded on </b>" + (new Date(strs['c'][0])).toString());
+
         }).catch(function(err) {
           console.log(err.message);
         });
@@ -58,6 +65,10 @@ var App = {
     });
     $(document).on('click', '.close', function(){
       document.getElementById('Submit-Hash-modal').style.display="none";
+      document.getElementById('Check-Hash-modal').style.display="none";
+      document.getElementById('Confirm-Hash-modal').style.display="none ";
+
+
     });
     $(document).on('click','.btn-submitHash',function(){
       App.submitHash();
@@ -75,8 +86,13 @@ var App = {
         contractInstance = instance;
         return contractInstance.storeHash(val,(new Date()).getTime(), {from: account});
       }).then(function(val){
-        console.log(val);
+        console.log(val)
+        document.getElementById('Submit-Hash-modal').style.display="block";
+        
       }).catch(function(err) {
+        document.getElementById('Confirm-Hash-modal').style.display="block";
+        $(".confirmation-message").html("Error Could not add hash, maybe the document has already been added?");
+
         console.log(err.message);
       });
     });
