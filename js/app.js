@@ -3,7 +3,7 @@ var App = {
   contracts: {},
 
   init: function(){
-    console.log("here");
+    console.log((new Date()).getTime());
     App.initWeb3();
   },
 
@@ -36,7 +36,7 @@ var App = {
 
   setBindings: function(){
     $(document).on('click', '.btn-hash', function(){
-      document.getElementById('input_overlay').style.display="block";
+      document.getElementById('Submit-Hash-modal').style.display="block";
     });
     $(document).on('click', '.btn-upload', function(){
       web3.eth.getAccounts(function(error,accounts){
@@ -57,7 +57,7 @@ var App = {
       });
     });
     $(document).on('click', '.close', function(){
-      document.getElementById('input_overlay').style.display="none";
+      document.getElementById('Submit-Hash-modal').style.display="none";
     });
     $(document).on('click','.btn-submitHash',function(){
       App.submitHash();
@@ -73,7 +73,7 @@ var App = {
       var account = accounts[0];
       App.contracts.Notary.deployed().then(function(instance) {
         contractInstance = instance;
-        return contractInstance.storeHash(val,1232, {from: account});
+        return contractInstance.storeHash(val,(new Date()).getTime(), {from: account});
       }).then(function(val){
         console.log(val);
       }).catch(function(err) {
@@ -83,8 +83,6 @@ var App = {
   }
 
 }
-
-
 
 $(function() {
   $(window).load(function() {
