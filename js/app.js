@@ -39,15 +39,21 @@ var App = {
       document.getElementById('input_overlay').style.display="block";
     });
     $(document).on('click', '.btn-upload', function(){
-      App.contracts.Notary.deployed().then(function(instance) {
-        contractInstance = instance;
-        console.log(contractInstance.getHashAt.call());
+      web3.eth.getAccounts(function(error,accounts){
+        if (error) {
+          console.log(error);
+        }
+        var account = accounts[0];
+        App.contracts.Notary.deployed().then(function(instance) {
+          contractInstance = instance;
+          //console.log(contractInstance.getHashAt.call());
 
-        return contractInstance.getHashAt.call();
-      }).then(function(strs){
-        console.log(strs);
-      }).catch(function(err) {
-        console.log(err.message);
+          return contractInstance.getHashAt.call(0x4e080f0d799b71a654d945e4cabf46a734caac436554b39841d1f9105bd36561);
+        }).then(function(strs){
+          console.log(strs);
+        }).catch(function(err) {
+          console.log(err.message);
+        });
       });
     });
     $(document).on('click', '.close', function(){
@@ -63,10 +69,11 @@ var App = {
       if (error) {
         console.log(error);
       }
+      var val = parseInt("0x" + $(".hashIn").val());
       var account = accounts[0];
       App.contracts.Notary.deployed().then(function(instance) {
         contractInstance = instance;
-        return contractInstance.storeHash(0xF,3242,{from: account});
+        return contractInstance.storeHash(val,1232, {from: account});
       }).then(function(val){
         console.log(val);
       }).catch(function(err) {

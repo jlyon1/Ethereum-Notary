@@ -1,20 +1,31 @@
 pragma solidity ^0.4.4;
 
+//A simple smart contract to act as the back end for an ethereum notary,
+//once document hashes are added they cannot be removed. or changed.
+//This smart contract handles no other functions.
 
-// This is just a simple example of a coin-like contract.
-// It is not standards compatible and cannot be expected to talk to other
-// coin/token contracts. If you want to create a standards-compliant
-// token, see: https://github.com/ConsenSys/Tokens. Cheers!
+//I beleive the smart contract should be as simple as possile, with most of the
+//heavy lifting done by the frontend. Feel free to use or modify any code as needed.
+
 
 contract Notary {
-		uint[0x7FFFFFFFFFFFFFFF] public AllHashes;
 
-		function storeHash(uint256 hash,uint date) returns (uint){
-			AllHashes[hash] = date;
-			return date;
+		uint[0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF] public AllHashes;
+
+		//Hashes of a document can only be added to the notary once, this way we can ensure
+		//that you cannot overwrite the date for a given document.
+		function storeHash(uint256 hash, uint val) returns (uint){
+			if(AllHashes[hash] == 0){
+				AllHashes[hash] = val;
+				return 1;
+			}else{
+				return 0;
+			}
 		}
 
-		function getHashAt() returns (uint){
-			return 36;
+		//Return the date for a hash at a given point.
+		function getHashAt(uint256 hash) returns (uint){
+			return AllHashes[hash];
 		}
+
 }
