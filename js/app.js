@@ -51,12 +51,19 @@ var App = {
           contractInstance = instance;
           //console.log(contractInstance.getHashAt.call());
 
-          return contractInstance.getHashAt.call(parseInt("0x" + $(".hashIn").val()));
+          return contractInstance.getHashAt.call(parseInt("0x" + $(".hashCheckBox").val()));
         }).then(function(strs){
           document.getElementById('Submit-Hash-modal').style.display="none";
           for(var i = 0; i < 100; i ++);
           document.getElementById('Confirm-Hash-modal').style.display="block";
-          $(".confirmation-message").html("<b>This document hash was recorded on </b>" + (new Date(strs['c'][0])).toString());
+          if(strs['c'][0] == 0){
+            $(".confirmation-message").html("<b>No Record found of this document</b>");
+            $(".iconDisplay").html("<i class='fa fa-times' style='color:#e74c3c; font-size:124px;'></i>");
+          }else{
+            $(".confirmation-message").html("<b>This document hash was recorded on </b>" + (new Date(strs['c'][0])).toString());
+            $(".iconDisplay").html("<i class='fa fa-file' style='color:#2ecc71; font-size:124px;'></i>");
+
+          }
 
         }).catch(function(err) {
           console.log(err.message);
@@ -88,7 +95,7 @@ var App = {
       }).then(function(val){
         console.log(val)
         document.getElementById('Submit-Hash-modal').style.display="block";
-        
+
       }).catch(function(err) {
         document.getElementById('Confirm-Hash-modal').style.display="block";
         $(".confirmation-message").html("Error Could not add hash, maybe the document has already been added?");
