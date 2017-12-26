@@ -10,7 +10,17 @@ pragma solidity ^0.4.4;
 
 contract Notary {
 
-		uint[0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF] public AllHashes;
+		uint[0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF] public AllHashes;
+
+		uint256 bal = 0;
+
+		function () payable{
+			bal = msg.value;
+		}
+
+		function getBal() returns (uint256){
+			return bal;
+		}
 
 		//Hashes of a document can only be added to the notary once, this way we can ensure
 		//that you cannot overwrite the date for a given document.
@@ -25,7 +35,7 @@ contract Notary {
 		}
 
 		//Return the date for a hash at a given point.
-		function getHashAt(uint256 hash) returns (uint){
+		function getHashAt(uint256 hash) view returns (uint){
 			return AllHashes[hash];
 		}
 

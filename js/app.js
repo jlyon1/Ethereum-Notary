@@ -1,3 +1,67 @@
+
+var App = {
+  web3Provider: null,
+  contracts: {}
+
+}
+
+Vue.component("titlebar",{
+  template: `<div v-bind:style=titleStyle><p v-bind:style=paragraphStyle>{{titleText}}</p></div>`,
+  data (){
+    return{
+      titleStyle: {position:"absolute",backgroundColor:"#eee",height:"34px",width:"auto",top:"1",left:"0",right:"0"},
+      paragraphStyle: {float: "left",height:"34px",lineHeight:"34px",verticalAlign:"center",paddingLeft:"30px",margin:"0"},
+      titleText: "EthNotary"
+    }
+  },
+  methods: {
+    initWeb3: function(){
+      // Initialize web3 and set the provider to the testRPC.
+      if (typeof web3 !== 'undefined') {
+        App.web3Provider = web3.currentProvider;
+        web3 = new Web3(web3.currentProvider);
+      } else {
+        // set the provider you want from Web3.providers
+        App.web3Provider = new web3.providers.HttpProvider('http://localhost:9545');
+        web3 = new Web3(App.web3Provider);
+      }
+      return this.initContract();
+    },
+    initContract: function(){
+      $.getJSON('Notary.json', function(data) {
+        // Get the  contract artifact file and instantiate it with truffle-contract.
+        var NotaryArtifact = data;
+        App.contracts.Notary = TruffleContract(NotaryArtifact);
+
+        App.contracts.Notary.setProvider(App.web3Provider);
+        return 0;
+      });
+      return this.setBindings();
+    },
+    setBindings: function(){
+      web3.eth.getAccounts(function(error,accounts){
+        App.contracts.Notary.deployed().then(function(instance) {
+          contractInstance = instance;
+          console.log(contractInstance.address);
+        });
+      });
+    }
+  },
+  mounted(){
+    this.initWeb3();
+
+  }
+
+});
+
+var Application = new Vue({
+  el: '#app-vue',
+  data: {
+  },
+
+
+});
+
 var App = {
   web3Provider: null,
   contracts: {},
@@ -26,7 +90,6 @@ var App = {
      App.contracts.Notary = TruffleContract(NotaryArtifact);
 
      App.contracts.Notary.setProvider(App.web3Provider);
-
      return 0;
    });
    return App.setBindings();
@@ -34,6 +97,12 @@ var App = {
 
 
   setBindings: function(){
+    web3.eth.getAccounts(function(error,accounts){
+      App.contracts.Notary.deployed().then(function(instance) {
+        contractInstance = instance;
+        console.log(contractInstance.address);
+      });
+    });
     $(document).on('click', '.btn-hash', function(){
       document.getElementById('Submit-Hash-modal').style.display="block";
     });
@@ -48,7 +117,7 @@ var App = {
         var account = accounts[0];
         App.contracts.Notary.deployed().then(function(instance) {
           contractInstance = instance;
-          //console.log(contractInstance.getHashAt.call());
+          console.log(contractInstance.address);
 
           return contractInstance.getHashAt.call(parseInt("0x" + $(".hashCheckBox").val()));
         }).then(function(strs){
