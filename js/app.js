@@ -3,7 +3,6 @@ var App = {
   contracts: {},
 
   init: function(){
-    console.log((new Date()).getTime());
     App.initWeb3();
   },
 
@@ -14,7 +13,7 @@ var App = {
       web3 = new Web3(web3.currentProvider);
     } else {
       // set the provider you want from Web3.providers
-      App.web3Provider = new web3.providers.HttpProvider('http://localhost:8545');
+      App.web3Provider = new web3.providers.HttpProvider('http://localhost:9545');
       web3 = new Web3(App.web3Provider);
     }
     return App.initContract();
