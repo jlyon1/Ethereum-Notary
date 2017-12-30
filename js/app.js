@@ -84,7 +84,7 @@ Vue.component("titlebar",{
   <p class="title">
   EthNotary</p>
   <p class="subtitle">{{titleText}}</p>
-  <p>Store a date on the blockchain using a document hash and retreive it later ot prove you owned it in a certain state at a given time. Submitting a hash is a "stamp of ownership", you can also submit any value and so long as no one has stamped it before you can prove ownership.</p>
+  <p>Store a date on the blockchain using a document hash and retreive it later to prove you owned it in a certain state at a given time. Submitting a hash is a "stamp of ownership", you can also submit any value and so long as no one has stamped it before you can prove ownership.</p>
   </div>
   </div>`,
   data (){
